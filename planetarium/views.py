@@ -2,11 +2,11 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from planetarium.models import (
-    ShowTheme,
+    ShowTheme, AstronomyShow,
 )
 from planetarium.permissions import IsAdminOrIfAuthenticatedReadOnly
 from planetarium.serializers import (
-    ShowThemeSerializer,
+    ShowThemeSerializer, AstronomyShowSerializer, AstronomyShowListSerializer, AstronomyDetailListSerializer,
 )
 
 
@@ -19,3 +19,25 @@ class ShowThemeViewSet(
     queryset = ShowTheme.objects.all()
     serializer_class = ShowThemeSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+
+class AstronomyShowViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.UpdateModelMixin,
+    GenericViewSet,
+):
+    queryset = AstronomyShow.objects.prefetch_related("show_themes")
+    serializer_class = AstronomyShowSerializer
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return AstronomyShowListSerializer
+
+        if self.action == "retrieve":
+            return AstronomyDetailListSerializer
+
+        return AstronomyShowSerializer
