@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db.models import Count, F
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -48,6 +49,27 @@ class AstronomyShowViewSet(
     serializer_class = AstronomyShowSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
+    @staticmethod
+    def _params_to_ints(qs):
+        """Converts a list of string IDs to a list of integers"""
+        return [int(str_id) for str_id in qs.split(",")]
+
+    def get_queryset(self):
+        """Retrieve the movies with filters"""
+        title = self.request.query_params.get("title")
+        show_themes = self.request.query_params.get("show_themes")
+
+        queryset = self.queryset
+
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+
+        if show_themes:
+            show_themes_ids = self._params_to_ints(show_themes)
+            queryset = queryset.filter(show_themes__id__in=show_themes_ids)
+
+        return queryset.distinct()
+
     def get_serializer_class(self):
         if self.action == "list":
             return AstronomyShowListSerializer
@@ -86,6 +108,23 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
     )
     serializer_class = ShowSessionListSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    def get_queryset(self):
+        date = self.request.query_params.get("date")
+        astronomy_show_id_str = self.request.query_params.get("astronomy_show")
+
+        queryset = self.queryset
+
+        if date:
+            date = datetime.strptime(date, "%Y-%m-%d").date()
+            queryset = queryset.filter(show_time__date=date)
+
+        if astronomy_show_id_str:
+            queryset = queryset.filter(
+                astronomy_show_id=int(astronomy_show_id_str)
+            )
+
+        return queryset
 
     def get_serializer_class(self):
         if self.action == "list":
