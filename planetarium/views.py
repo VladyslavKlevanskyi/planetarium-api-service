@@ -1,10 +1,12 @@
-from rest_framework import mixins
+from django.db.models import Count, F
+from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
 
 from planetarium.models import (
     ShowTheme,
     AstronomyShow,
     PlanetariumDome,
+    ShowSession,
 )
 from planetarium.permissions import IsAdminOrIfAuthenticatedReadOnly
 from planetarium.serializers import (
@@ -13,6 +15,8 @@ from planetarium.serializers import (
     AstronomyShowListSerializer,
     AstronomyDetailListSerializer,
     PlanetariumDomeSerializer,
+    ShowSessionListSerializer,
+    ShowSessionSerializer,
 )
 
 
@@ -59,3 +63,25 @@ class PlanetariumDomeViewSet(
     queryset = PlanetariumDome.objects.all()
     serializer_class = PlanetariumDomeSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+
+class ShowSessionViewSet(viewsets.ModelViewSet):
+    queryset = (
+        ShowSession.objects.all()
+        .select_related("astronomy_show", "planetarium_dome")
+        .annotate(
+            tickets_available=(
+                F("planetarium_dome__rows")
+                * F("planetarium_dome__seats_in_row")
+                - Count("tickets")
+            )
+        )
+    )
+    serializer_class = ShowSessionListSerializer
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ShowSessionListSerializer
+
+        return ShowSessionSerializer

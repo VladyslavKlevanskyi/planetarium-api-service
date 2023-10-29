@@ -4,12 +4,14 @@ from planetarium.views import (
     ShowThemeViewSet,
     AstronomyShowViewSet,
     PlanetariumDomeViewSet,
+    ShowSessionViewSet,
 )
 
 router = routers.DefaultRouter()
 router.register("show-themes", ShowThemeViewSet)
 router.register("astronomy-shows", AstronomyShowViewSet)
 router.register("planetarium-domes", PlanetariumDomeViewSet)
+router.register("show-sessions", ShowSessionViewSet)
 
 urlpatterns = [
     path("", include(router.urls))
