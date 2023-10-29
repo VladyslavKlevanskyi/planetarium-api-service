@@ -1,5 +1,6 @@
 from django.db.models import Count, F
 from rest_framework import mixins, viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
 from planetarium.models import (
@@ -7,6 +8,7 @@ from planetarium.models import (
     AstronomyShow,
     PlanetariumDome,
     ShowSession,
+    Reservation,
 )
 from planetarium.permissions import IsAdminOrIfAuthenticatedReadOnly
 from planetarium.serializers import (
@@ -18,6 +20,8 @@ from planetarium.serializers import (
     ShowSessionListSerializer,
     ShowSessionSerializer,
     ShowSessionDetailSerializer,
+    ReservationSerializer,
+    ReservationListSerializer,
 )
 
 
@@ -68,8 +72,10 @@ class PlanetariumDomeViewSet(
 
 class ShowSessionViewSet(viewsets.ModelViewSet):
     queryset = (
-        ShowSession.objects.all()
-        .select_related("astronomy_show", "planetarium_dome")
+        ShowSession.objects.select_related(
+            "astronomy_show",
+            "planetarium_dome"
+        )
         .annotate(
             tickets_available=(
                 F("planetarium_dome__rows")
@@ -89,3 +95,28 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
             return ShowSessionDetailSerializer
 
         return ShowSessionSerializer
+
+
+class ReservationViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet,
+):
+    queryset = Reservation.objects.prefetch_related(
+        "tickets__show_session__astronomy_show",
+        "tickets__show_session__planetarium_dome",
+    )
+    serializer_class = ReservationSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ReservationListSerializer
+
+        return ReservationSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
