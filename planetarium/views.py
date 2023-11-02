@@ -1,5 +1,7 @@
 from datetime import datetime
 from django.db.models import Count, F
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
@@ -79,6 +81,27 @@ class AstronomyShowViewSet(
 
         return AstronomyShowSerializer
 
+    # Only for documentation purposes
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "show_themes",
+                type={"type": "list", "items": {"type": "number"}},
+                description="Filter by show theme id (ex. ?show_themes=2,5)",
+            ),
+            OpenApiParameter(
+                "title",
+                type=OpenApiTypes.STR,
+                description=(
+                    "Filter by astronomy show title "
+                    "(ex. ?title=stars)"
+                ),
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class PlanetariumDomeViewSet(
     mixins.ListModelMixin,
@@ -134,6 +157,29 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
             return ShowSessionDetailSerializer
 
         return ShowSessionSerializer
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "astronomy_show",
+                type=OpenApiTypes.INT,
+                description=(
+                    "Filter by astronomy show id "
+                    "(ex. ?astronomy_show=2)"
+                ),
+            ),
+            OpenApiParameter(
+                "date",
+                type=OpenApiTypes.DATE,
+                description=(
+                    "Filter by datetime of show time "
+                    "(ex. ?date=2022-10-23)"
+                ),
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class ReservationViewSet(
