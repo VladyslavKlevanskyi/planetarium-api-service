@@ -1,11 +1,8 @@
-
 from django.test import TestCase
-
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from planetarium.models import ShowTheme, AstronomyShow
 from planetarium.serializers import (
     AstronomyShowListSerializer,
@@ -45,21 +42,21 @@ class AuthenticatedAstronomyShowApiTests(TestCase):
         self.show_theme3 = ShowTheme.objects.create(name="Emptiness in us")
 
         self.astronomy_show1 = AstronomyShow.objects.create(
-            title=f"Good Show",
+            title="Good Show",
             description="Good Show description"
-            )
+        )
         self.astronomy_show1.show_themes.add(self.show_theme1)
 
         self.astronomy_show2 = AstronomyShow.objects.create(
-            title=f"Bad Show",
+            title="Bad Show",
             description="Bad Show description"
-            )
+        )
         self.astronomy_show2.show_themes.add(self.show_theme2)
 
         self.astronomy_show3 = AstronomyShow.objects.create(
-            title=f"No match",
+            title="No match",
             description="No match show description"
-            )
+        )
         self.astronomy_show3.show_themes.add(self.show_theme3)
 
     def test_list_astronomy_shows(self):
@@ -108,7 +105,7 @@ class AuthenticatedAstronomyShowApiTests(TestCase):
 
     def test_retrieve_astronomy_show_detail(self):
         astronomy_show = AstronomyShow.objects.create(
-            title=f"Space in us",
+            title="Space in us",
         )
         astronomy_show.show_themes.add(self.show_theme1)
 

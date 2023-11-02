@@ -1,7 +1,5 @@
 from datetime import datetime
 from unittest import mock
-
-import pytz
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -88,7 +86,6 @@ class ReservationModelTests(TestCase):
             hour=14,
             minute=45,
             second=0,
-            tzinfo=pytz.utc
         )
         self.mocked2 = datetime(
             year=2022,
@@ -97,7 +94,6 @@ class ReservationModelTests(TestCase):
             hour=14,
             minute=50,
             second=0,
-            tzinfo=pytz.utc
         )
         self.mocked3 = datetime(
             year=2022,
@@ -106,7 +102,6 @@ class ReservationModelTests(TestCase):
             hour=14,
             minute=55,
             second=0,
-            tzinfo=pytz.utc
         )
         with mock.patch(
                 "django.utils.timezone.now",
@@ -168,10 +163,9 @@ class ShowSessionModelTests(TestCase):
                     day=24,
                     hour=18,
                     minute=i,
-                    second=0,
-                    tzinfo=pytz.utc
-                    ),
+                    second=0
                 )
+            )
             self.session_list.append(session)
 
     def test_str_in_show_session_model(self):
@@ -235,7 +229,6 @@ class TicketTests(TestCase):
                 hour=4,
                 minute=1,
                 second=0,
-                tzinfo=pytz.utc
             )
         )
 

@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from planetarium.models import PlanetariumDome
 from planetarium.serializers import (
     PlanetariumDomeSerializer
@@ -88,7 +87,10 @@ class AdminPlanetariumDomeApiTests(TestCase):
         self.assertEqual(res.data["id"], planetarium_dome.id)
         self.assertEqual(res.data["name"], planetarium_dome.name)
         self.assertEqual(res.data["rows"], planetarium_dome.rows)
-        self.assertEqual(res.data["seats_in_row"], planetarium_dome.seats_in_row)
+        self.assertEqual(
+            res.data["seats_in_row"],
+            planetarium_dome.seats_in_row
+        )
 
     def test_planetarium_dome_deletion(self):
         planetarium_dome = PlanetariumDome.objects.create(
@@ -104,7 +106,7 @@ class AdminPlanetariumDomeApiTests(TestCase):
 
     def test_planetarium_dome_update(self):
         planetarium_dome = PlanetariumDome.objects.create(
-            name=f"Dome Test",
+            name="Dome Test",
             rows=2,
             seats_in_row=3,
         )

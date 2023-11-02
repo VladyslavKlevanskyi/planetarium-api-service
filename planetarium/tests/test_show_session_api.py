@@ -1,13 +1,10 @@
 from datetime import datetime
 from django.db.models import Count, F
-import pytz
 from django.test import TestCase
-
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from planetarium.models import (
     ShowTheme,
     AstronomyShow,
@@ -50,9 +47,9 @@ class AuthenticatedShowSessionApiTests(TestCase):
         show_theme = ShowTheme.objects.create(name="Space inside")
 
         self.astronomy_show = AstronomyShow.objects.create(
-            title=f"Good Show",
+            title="Good Show",
             description="Good Show description"
-            )
+        )
         self.astronomy_show.show_themes.add(show_theme)
         self.planetarium_dome = PlanetariumDome.objects.create(
             name="Dome Test",
@@ -71,7 +68,6 @@ class AuthenticatedShowSessionApiTests(TestCase):
                     hour=14,
                     minute=0,
                     second=0,
-                    tzinfo=pytz.utc
                 )
             )
 
@@ -97,7 +93,6 @@ class AuthenticatedShowSessionApiTests(TestCase):
             hour=10,
             minute=0,
             second=0,
-            tzinfo=pytz.utc
         )
 
         ShowSession.objects.create(
@@ -131,9 +126,9 @@ class AuthenticatedShowSessionApiTests(TestCase):
         show_theme = ShowTheme.objects.create(name="Dark Space")
 
         astronomy_show = AstronomyShow.objects.create(
-            title=f"Very Good Show",
+            title="Very Good Show",
             description="Very Good Show description"
-            )
+        )
         astronomy_show.show_themes.add(show_theme)
 
         date = datetime(
@@ -143,7 +138,6 @@ class AuthenticatedShowSessionApiTests(TestCase):
             hour=10,
             minute=0,
             second=0,
-            tzinfo=pytz.utc
         )
 
         ShowSession.objects.create(
@@ -181,7 +175,6 @@ class AuthenticatedShowSessionApiTests(TestCase):
             hour=10,
             minute=0,
             second=0,
-            tzinfo=pytz.utc
         )
 
         payload = {
@@ -197,9 +190,9 @@ class AuthenticatedShowSessionApiTests(TestCase):
         show_theme = ShowTheme.objects.create(name="Dark Space")
 
         astronomy_show = AstronomyShow.objects.create(
-            title=f"Very Good Show",
+            title="Very Good Show",
             description="Very Good Show description"
-            )
+        )
         astronomy_show.show_themes.add(show_theme)
 
         date = datetime(
@@ -209,7 +202,6 @@ class AuthenticatedShowSessionApiTests(TestCase):
             hour=10,
             minute=0,
             second=0,
-            tzinfo=pytz.utc
         )
 
         show_session = ShowSession.objects.create(
@@ -239,9 +231,9 @@ class AdminShowSessionApiTests(TestCase):
         show_theme = ShowTheme.objects.create(name="Space inside")
 
         self.astronomy_show = AstronomyShow.objects.create(
-            title=f"Good Show",
+            title="Good Show",
             description="Good Show description"
-            )
+        )
         self.astronomy_show.show_themes.add(show_theme)
         self.planetarium_dome = PlanetariumDome.objects.create(
             name="Dome Test",
@@ -260,7 +252,6 @@ class AdminShowSessionApiTests(TestCase):
                     hour=14,
                     minute=0,
                     second=0,
-                    tzinfo=pytz.utc
                 )
             )
 
@@ -272,7 +263,6 @@ class AdminShowSessionApiTests(TestCase):
             hour=10,
             minute=0,
             second=0,
-            tzinfo=pytz.utc
         )
 
         payload = {
