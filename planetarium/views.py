@@ -3,6 +3,7 @@ from django.db.models import Count, F
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import mixins, viewsets
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
@@ -182,6 +183,11 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+class ReservationPagination(PageNumberPagination):
+    page_size = 10
+    max_page_size = 100
+
+
 class ReservationViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
@@ -192,6 +198,7 @@ class ReservationViewSet(
         "tickets__show_session__planetarium_dome",
     )
     serializer_class = ReservationSerializer
+    pagination_class = ReservationPagination
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
