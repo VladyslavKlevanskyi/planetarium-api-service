@@ -32,15 +32,21 @@ class AstronomyShowListSerializer(AstronomyShowSerializer):
 
     class Meta:
         model = AstronomyShow
-        fields = ("id", "title", "description", "show_themes")
+        fields = ("id", "title", "description", "show_themes", "image")
 
 
-class AstronomyDetailListSerializer(AstronomyShowSerializer):
+class AstronomyShowDetailSerializer(AstronomyShowSerializer):
     show_themes = ShowThemeSerializer(many=True, read_only=True)
 
     class Meta:
         model = AstronomyShow
-        fields = ("id", "title", "description", "show_themes")
+        fields = ("id", "title", "description", "show_themes", "image")
+
+
+class AstronomyShowImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AstronomyShow
+        fields = ("id", "image")
 
 
 class PlanetariumDomeSerializer(serializers.ModelSerializer):
@@ -60,6 +66,10 @@ class ShowSessionListSerializer(ShowSessionSerializer):
         source="astronomy_show.title",
         read_only=True
     )
+    astronomy_show_image = serializers.ImageField(
+        source="astronomy_show.image",
+        read_only=True
+    )
     planetarium_dome_name = serializers.CharField(
         source="planetarium_dome.name",
         read_only=True
@@ -75,6 +85,7 @@ class ShowSessionListSerializer(ShowSessionSerializer):
             "id",
             "show_time",
             "astronomy_show_title",
+            "astronomy_show_image",
             "planetarium_dome_name",
             "planetarium_dome_capacity",
             "tickets_available"
