@@ -2,9 +2,11 @@ from datetime import datetime
 from django.db.models import Count, F
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from planetarium.models import (
@@ -19,7 +21,8 @@ from planetarium.serializers import (
     ShowThemeSerializer,
     AstronomyShowSerializer,
     AstronomyShowListSerializer,
-    AstronomyDetailListSerializer,
+    AstronomyShowDetailSerializer,
+    AstronomyShowImageSerializer,
     PlanetariumDomeSerializer,
     ShowSessionListSerializer,
     ShowSessionSerializer,
@@ -58,7 +61,7 @@ class AstronomyShowViewSet(
         return [int(str_id) for str_id in qs.split(",")]
 
     def get_queryset(self):
-        """Retrieve the movies with filters"""
+        """Retrieve the astronomy_shows with filters"""
         title = self.request.query_params.get("title")
         show_themes = self.request.query_params.get("show_themes")
 
@@ -78,9 +81,29 @@ class AstronomyShowViewSet(
             return AstronomyShowListSerializer
 
         if self.action == "retrieve":
-            return AstronomyDetailListSerializer
+            return AstronomyShowDetailSerializer
+
+        if self.action == "upload_image":
+            return AstronomyShowImageSerializer
 
         return AstronomyShowSerializer
+
+    @action(
+        methods=["POST"],
+        detail=True,
+        url_path="upload-image",
+        permission_classes=[IsAdminUser],
+    )
+    def upload_image(self, request, pk=None):
+        """Endpoint for uploading image to specific astronomy show"""
+        astronomy_show = self.get_object()
+        serializer = self.get_serializer(astronomy_show, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Only for documentation purposes
     @extend_schema(
@@ -121,7 +144,7 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
         ShowSession.objects.select_related(
             "astronomy_show",
             "planetarium_dome"
-        )
+        ).order_by("show_time")
         .annotate(
             tickets_available=(
                 F("planetarium_dome__rows")
