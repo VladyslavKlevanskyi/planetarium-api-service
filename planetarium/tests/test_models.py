@@ -180,8 +180,6 @@ class ShowSessionModelTests(TestCase):
         for session in ShowSession.objects.all():
             ordering_list.append(session)
 
-        self.session_list.reverse()
-
         self.assertEqual(ordering_list, self.session_list)
 
     def test_fields_in_show_session_model(self):

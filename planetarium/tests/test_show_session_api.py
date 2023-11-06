@@ -73,7 +73,7 @@ class AuthenticatedShowSessionApiTests(TestCase):
 
     def test_list_show_sessions(self):
         res = self.client.get(SHOW_SESSION_URL)
-        show_sessions = ShowSession.objects.all().annotate(
+        show_sessions = ShowSession.objects.order_by("show_time").annotate(
             tickets_available=(
                 F("planetarium_dome__rows")
                 * F("planetarium_dome__seats_in_row")

@@ -61,8 +61,12 @@ class AuthenticatedReservationApiTests(TestCase):
         )
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data, serializer_user.data)
-        self.assertNotEquals(res.data, serializer_user2.data)
+        self.assertEqual(res.data["results"], serializer_user.data)
+
+        self.client.logout()
+        self.client.force_authenticate(user2)
+        res2 = self.client.get(RESERVATION_URL)
+        self.assertEqual(res2.data["results"], serializer_user2.data)
 
     def test_reservation_creation(self):
         show_theme = ShowTheme.objects.create(name="Emptiness in us")
