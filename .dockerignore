@@ -1,0 +1,4 @@
+venv
+init_django_orm.py
+main.py
+.env
