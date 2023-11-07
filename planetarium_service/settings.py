@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "debug_toolbar",
     "domes",
+    "reservations",
     "planetarium",
     "user",
 ]

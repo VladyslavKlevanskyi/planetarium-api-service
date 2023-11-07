@@ -32,6 +32,9 @@ urlpatterns = [
     path("api/domes/",
          include("domes.urls", namespace="domes"),
          ),
+    path("api/reservations/",
+         include("reservations.urls", namespace="reservations"),
+         ),
     path("api/user/", include("user.urls", namespace="user")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(

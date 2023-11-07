@@ -1,21 +1,19 @@
 import os
 import tempfile
-from datetime import datetime
-
 from PIL import Image
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from planetarium.models import ShowTheme, AstronomyShow, PlanetariumDome, ShowSession
+
+from planetarium.models import ShowTheme, AstronomyShow
 from planetarium.serializers import (
     AstronomyShowListSerializer,
     AstronomyShowDetailSerializer,
 )
 
 ASTRONOMY_SHOW_URL = reverse("planetarium:astronomyshow-list")
-SHOW_SESSION_URL = reverse("planetarium:showsession-list")
 
 
 def detail_url(astronomy_show_id):
