@@ -1,5 +1,5 @@
 from django.test import TestCase
-from planetarium.models import PlanetariumDome
+from domes.models import PlanetariumDome
 
 PLANETARIUM_DOME_NAME = "Planetarium Dome Name"
 
