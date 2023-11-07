@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
+from domes.models import PlanetariumDome
 
 
 class ShowTheme(models.Model):
@@ -37,19 +38,6 @@ class AstronomyShow(models.Model):
 
     class Meta:
         ordering = ["id"]
-
-
-class PlanetariumDome(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    rows = models.IntegerField()
-    seats_in_row = models.IntegerField()
-
-    @property
-    def capacity(self) -> int:
-        return self.rows * self.seats_in_row
-
-    def __str__(self):
-        return f"{self.name} (capacity: {self.capacity})"
 
 
 class Reservation(models.Model):

@@ -5,11 +5,12 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
+
+from domes.models import PlanetariumDome
 from planetarium.models import (
     ShowTheme,
     AstronomyShow,
     ShowSession,
-    PlanetariumDome
 )
 from planetarium.serializers import (
     ShowSessionListSerializer,

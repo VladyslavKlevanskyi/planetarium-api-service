@@ -1,10 +1,11 @@
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
+from domes.serializers import PlanetariumDomeSerializer
 from planetarium.models import (
     ShowTheme,
     AstronomyShow,
-    PlanetariumDome,
     ShowSession,
     Ticket,
     Reservation,
@@ -47,12 +48,6 @@ class AstronomyShowImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = AstronomyShow
         fields = ("id", "image")
-
-
-class PlanetariumDomeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PlanetariumDome
-        fields = ("id", "name", "rows", "seats_in_row", "capacity")
 
 
 class ShowSessionSerializer(serializers.ModelSerializer):

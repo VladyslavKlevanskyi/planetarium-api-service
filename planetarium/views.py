@@ -12,7 +12,6 @@ from rest_framework.viewsets import GenericViewSet
 from planetarium.models import (
     ShowTheme,
     AstronomyShow,
-    PlanetariumDome,
     ShowSession,
     Reservation,
 )
@@ -23,7 +22,6 @@ from planetarium.serializers import (
     AstronomyShowListSerializer,
     AstronomyShowDetailSerializer,
     AstronomyShowImageSerializer,
-    PlanetariumDomeSerializer,
     ShowSessionListSerializer,
     ShowSessionSerializer,
     ShowSessionDetailSerializer,
@@ -125,18 +123,6 @@ class AstronomyShowViewSet(
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
-
-
-class PlanetariumDomeViewSet(
-    mixins.ListModelMixin,
-    mixins.CreateModelMixin,
-    mixins.DestroyModelMixin,
-    mixins.UpdateModelMixin,
-    GenericViewSet,
-):
-    queryset = PlanetariumDome.objects.all()
-    serializer_class = PlanetariumDomeSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class ShowSessionViewSet(viewsets.ModelViewSet):
