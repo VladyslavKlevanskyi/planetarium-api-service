@@ -1,6 +1,3 @@
-DB_Structure.webp
-.env
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -131,3 +128,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/init_django_orm.py
+/main.py
