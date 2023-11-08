@@ -5,9 +5,6 @@ Project for managing API service with the ability to buy tickets and make orders
 
 The goal of the project is to learn DRF by creating a simple service for making reservations to astronomy shows.
 
-
-![Default Home View](_screenshots/Main.jpg?raw=true "Index")
-
 ### Main features
 
 * The project contains 6 models
@@ -43,36 +40,36 @@ The goal of the project is to learn DRF by creating a simple service for making 
 
 Open the Git Bash console in the directory where you want to place the project. Run command:
 
-    $ git clone https://github.com/VladyslavKlevanskyi/planetarium-api-service.git
+    git clone https://github.com/VladyslavKlevanskyi/planetarium-api-service.git
 
 ### 2. Create virtual environment
 
 Open the project and run command:
 
-    $ python -m venv venv
+    python -m venv venv
     
 And then activate virtualenv:
     
 a) For windows:
 
-    $ venv\Scripts\activate
+    venv\Scripts\activate
    
 b) For mac:
 
-    $ source venv/bin/activate
+    source venv/bin/activate
       
 
 ### 3. Installing project dependencies
 
 Run command:
 
-    $ pip install -r requirements.txt
+    pip install -r requirements.txt
 
 ### 4. Adding a secret key to the project
 
 Generate a new secret key:
 
-    $ python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 Rename `.env.sample` file to `.env.docker`. Open it and replace `<your_secret_key>` with the key you generated before.
 
@@ -84,19 +81,19 @@ In file `.env.docker` enter database name - `POSTGRES_HOST=db`. You can fill in 
 
 Docker should be installed. Run these commands one by one:
 
-    $ docker-compose build
-    $ docker-compose up
+    docker-compose build
+    docker-compose up
 
 ### 7. Go into a Docker container's shell
 
 To enter in your Docker container's shell, you first need to know `CONTAINER ID`.
 Use the command in the terminal:
 
-    $ docker ps
+    docker ps
 
 You can see `CONTAINER ID` of you image. To enter inside the container, use command:
 
-    $ docker exec -it XXXXXXXXXXXX bash
+    docker exec -it XXXXXXXXXXXX bash
 
 Where `XXXXXXXXXXXX` - is `CONTAINER ID` of you image.
 
@@ -105,13 +102,13 @@ Where `XXXXXXXXXXXX` - is `CONTAINER ID` of you image.
 
 In order to make sure that the project is working correctly, run the tests with the command:
 
-    $ python manage.py test 
+    python manage.py test 
 
 ### 9. Load data into database:
 
 To fill the database, load the `.json` file with the command:
     
-    $ python manage.py loaddata planetarium_db.json
+    python manage.py loaddata planetarium_db.json
 
 
 
@@ -127,8 +124,28 @@ Enter credentials:
 
 Now you can use "access" token with **ModHeader** plugin for example.
 
-Go to main page:
+You can visit these pages:
 
-    http://127.0.0.1:8000/api/planetarium/
+    http://127.0.0.1:8000/api/shows/ - with shows api
+
+![Default Home View](_screenshots/shows.png?raw=true "shows")
+
+    http://127.0.0.1:8000/api/planetarium/ - with planetarium domes api
+
+![Default Home View](_screenshots/planetarium.png?raw=true "planetarium")
+
+    http://127.0.0.1:8000/api/reservations/ - with reservations api
+
+![Default Home View](_screenshots/reservations.png?raw=true "reservations")
+
+If you want, you can explore the site with other credentials:
+
+* Email - `john@smith.com`
+* Password - `123qweASD`
+
+or
+
+* Email - `hanna@wilson.com`
+*  Password - `123qweASD`
 
 Enjoy!
