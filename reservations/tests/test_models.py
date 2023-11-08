@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from domes.models import PlanetariumDome
-from planetarium.models import AstronomyShow, ShowTheme
+from shows.models import AstronomyShow, ShowTheme
 from reservations.models import Reservation, ShowSession, Ticket
 
 SHOW_THEME_NAME = "Test Show Theme"

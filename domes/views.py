@@ -2,7 +2,7 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 from domes.models import PlanetariumDome
 from domes.serializers import PlanetariumDomeSerializer
-from planetarium.permissions import IsAdminOrIfAuthenticatedReadOnly
+from user.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 
 class PlanetariumDomeViewSet(

@@ -3,10 +3,10 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from planetarium.models import ShowTheme
-from planetarium.serializers import ShowThemeSerializer
+from shows.models import ShowTheme
+from shows.serializers import ShowThemeSerializer
 
-SHOW_THEME_URL = reverse("planetarium:showtheme-list")
+SHOW_THEME_URL = reverse("shows:showtheme-list")
 
 
 def sample_show_theme(*names):
@@ -15,7 +15,10 @@ def sample_show_theme(*names):
 
 
 def detail_url(show_theme_id):
-    return reverse("planetarium:showtheme-detail", args=[show_theme_id])
+    return reverse(
+        "shows:showtheme-detail",
+        args=[show_theme_id]
+    )
 
 
 class UnauthenticatedShowThemeApiTests(TestCase):

@@ -3,7 +3,7 @@ from rest_framework import routers
 from domes.views import PlanetariumDomeViewSet
 
 router = routers.DefaultRouter()
-router.register("planetarium-domes", PlanetariumDomeViewSet)
+router.register("domes", PlanetariumDomeViewSet)
 
 urlpatterns = [
     path("", include(router.urls))

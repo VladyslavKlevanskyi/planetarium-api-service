@@ -6,7 +6,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
-from planetarium.permissions import IsAdminOrIfAuthenticatedReadOnly
+from user.permissions import IsAdminOrIfAuthenticatedReadOnly
 from reservations.models import ShowSession, Reservation
 from reservations.serializers import (
     ShowSessionListSerializer,

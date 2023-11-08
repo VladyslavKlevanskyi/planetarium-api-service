@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "domes",
     "reservations",
-    "planetarium",
+    "shows",
     "user",
 ]
 
@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Planetarium API",
-    "DESCRIPTION": "Order tickets for you planetarium shows",
+    "DESCRIPTION": "Order tickets for you shows shows",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SWAGGER_UI_SETTINGS": {

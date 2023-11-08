@@ -1,5 +1,5 @@
 from django.test import TestCase
-from planetarium.models import AstronomyShow, ShowTheme
+from shows.models import AstronomyShow, ShowTheme
 
 SHOW_THEME_NAME = "Test Show Theme"
 ASTRONOMY_SHOW_TITLE = "Test Astronomy Show"

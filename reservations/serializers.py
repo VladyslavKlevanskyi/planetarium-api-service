@@ -2,7 +2,7 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from domes.serializers import PlanetariumDomeSerializer
-from planetarium.serializers import AstronomyShowListSerializer
+from shows.serializers import AstronomyShowListSerializer
 from reservations.models import ShowSession, Ticket, Reservation
 
 

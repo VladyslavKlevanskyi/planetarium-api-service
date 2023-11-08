@@ -7,25 +7,28 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from planetarium.models import ShowTheme, AstronomyShow
-from planetarium.serializers import (
+from shows.models import ShowTheme, AstronomyShow
+from shows.serializers import (
     AstronomyShowListSerializer,
     AstronomyShowDetailSerializer,
 )
 
-ASTRONOMY_SHOW_URL = reverse("planetarium:astronomyshow-list")
+ASTRONOMY_SHOW_URL = reverse("shows:astronomyshow-list")
 
 
 def detail_url(astronomy_show_id):
     return reverse(
-        "planetarium:astronomyshow-detail",
+        "shows:astronomyshow-detail",
         args=[astronomy_show_id]
     )
 
 
 def image_upload_url(astronomy_show_id):
     """Return URL for recipe image upload"""
-    return reverse("planetarium:astronomyshow-upload-image", args=[astronomy_show_id])
+    return reverse(
+        "shows:astronomyshow-upload-image",
+        args=[astronomy_show_id]
+    )
 
 
 class UnauthenticatedAstronomyShowApiTests(TestCase):

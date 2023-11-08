@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 from domes.models import PlanetariumDome
-from planetarium.models import ShowTheme, AstronomyShow
+from shows.models import ShowTheme, AstronomyShow
 from reservations.models import ShowSession
 from reservations.serializers import (
     ShowSessionListSerializer,

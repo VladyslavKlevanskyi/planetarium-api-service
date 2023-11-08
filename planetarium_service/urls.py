@@ -26,10 +26,10 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/planetarium/",
-         include("planetarium.urls", namespace="planetarium"),
+    path("api/shows/",
+         include("shows.urls", namespace="shows"),
          ),
-    path("api/domes/",
+    path("api/planetarium/",
          include("domes.urls", namespace="domes"),
          ),
     path("api/reservations/",

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from domes.models import PlanetariumDome
-from planetarium.models import AstronomyShow
+from shows.models import AstronomyShow
 
 
 class ShowSession(models.Model):
