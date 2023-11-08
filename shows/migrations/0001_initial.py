@@ -45,7 +45,8 @@ class Migration(migrations.Migration):
                 (
                     "image",
                     models.ImageField(
-                        null=True, upload_to=shows.models.astronomy_show_image_file_path
+                        null=True,
+                        upload_to=shows.models.astronomy_show_image_file_path
                     ),
                 ),
                 (
